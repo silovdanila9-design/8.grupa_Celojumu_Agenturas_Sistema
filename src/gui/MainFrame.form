@@ -23,7 +23,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-<<<<<<< HEAD
+
           <Group type="102" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
@@ -76,7 +76,7 @@
       </Properties>
     </Component>
   </SubComponents>
-=======
+
           <EmptySpace min="0" pref="400" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
@@ -86,5 +86,5 @@
       </Group>
     </DimensionLayout>
   </Layout>
->>>>>>> origin/master
+
 </Form>
