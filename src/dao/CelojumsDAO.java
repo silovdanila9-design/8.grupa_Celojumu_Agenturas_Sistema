@@ -32,4 +32,20 @@ public class CelojumsDAO {
         }
         return saraksts;
     }
+    
+    public boolean atjaunotCelojumu(Celojums c) {
+    String sql = "UPDATE CELOJUMS SET nosaukums = ?, apraksts = ?, cena = ? WHERE id = ?";
+    try (Connection conn = DatabaseManager.getConnection();
+         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        pstmt.setString(1, c.getNosaukums());
+        pstmt.setString(2, c.getApraksts());
+        pstmt.setDouble(3, c.getCena());
+        pstmt.setInt(4, c.getId());
+        pstmt.executeUpdate();
+        return true;
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return false;
+    }
+    }
 }

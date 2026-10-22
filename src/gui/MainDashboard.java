@@ -88,6 +88,68 @@ public class MainDashboard extends JFrame {
             tableModel.addRow(rinda);
         }
     }
+    
+    private void atvertRedigesanasFormu() {
+    int selectedRow = tableCelojumi.getSelectedRow();
+    if (selectedRow == -1) {
+        JOptionPane.showMessageDialog(this, "Lūdzu, izvēlieties ceļojumu no tabulas, ko vēlaties rediģēt!", "Brīdinājums", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    // Nolasām datus no izvēlētās rindas tabulā
+    int id = (int) tableModel.getValueAt(selectedRow, 0);
+    String esošaisNosaukums = (String) tableModel.getValueAt(selectedRow, 1);
+    String esošaisApraksts = (String) tableModel.getValueAt(selectedRow, 2);
+    double esošāCena = (double) tableModel.getValueAt(selectedRow, 3);
+
+    // Izveidojam ievades laukus rediģēšanas formai
+    JTextField txtNosaukums = new JTextField(esošaisNosaukums, 20);
+    JTextField txtApraksts = new JTextField(esošaisApraksts, 20);
+    JTextField txtCena = new JTextField(String.valueOf(esošāCena), 10);
+
+    JPanel panelis = new JPanel(new GridLayout(3, 2, 5, 5));
+    panelis.add(new JLabel("Nosaukums:"));
+    panelis.add(txtNosaukums);
+    panelis.add(new JLabel("Apraksts:"));
+    panelis.add(txtApraksts);
+    panelis.add(new JLabel("Cena (EUR):"));
+    panelis.add(txtCena);
+
+    int rezultats = JOptionPane.showConfirmDialog(
+            this,
+            panelis,
+            "Ceļojuma rediģēšana (ID: " + id + ")",
+            JOptionPane.OK_CANCEL_OPTION,
+            JOptionPane.PLAIN_MESSAGE
+    );
+
+    if (rezultats == JOptionPane.OK_OPTION) {
+        try {
+            String jaunaisNosaukums = txtNosaukums.getText().trim();
+            String jaunaisApraksts = txtApraksts.getText().trim();
+            double jaunāCena = Double.parseDouble(txtCena.getText().trim());
+
+            if (jaunaisNosaukums.isEmpty() || jaunaisApraksts.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Visiem laukiem jābūt aizpildītiem!", "Kļūda", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Izveidojam atjaunināto objektu un izsaucam DAO UPDATE metodi
+            Celojums atjaunotsCelojums = new Celojums(id, jaunaisNosaukums, jaunaisApraksts, jaunāCena);
+            boolean veiksme = celojumsDAO.atjaunotCelojumu(atjaunotsCelojums);
+
+            if (veiksme) {
+                JOptionPane.showMessageDialog(this, "Ceļojums veiksmīgi atjaunināts!", "Informācija", JOptionPane.INFORMATION_MESSAGE);
+                ieladetCelojumus(); // Automātiski atjauno tabulas datus ekrānā
+            } else {
+                JOptionPane.showMessageDialog(this, "Neizdevās atjaunināt ceļojumu.", "Kļūda", JOptionPane.ERROR_MESSAGE);
+            }
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Cenas laukā jābūt ievadītam derīgam skaitlim!", "Kļūda", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    }
 
     private void rezervetIzveletoCelojumu() {
         int selectedRow = tableCelojumi.getSelectedRow();
