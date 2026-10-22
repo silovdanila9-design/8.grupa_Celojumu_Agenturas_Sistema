@@ -146,10 +146,10 @@ public class MainDashboard extends JFrame {
             }
 
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Cenas laukā jābūt ievadītam derīgam skaitlim!", "Kļūda", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Cenas laukā jābūt ievadītam derīgam skaitlim!!!", "Kļūda", JOptionPane.ERROR_MESSAGE);
         }
     }
-    }
+    } 
 
     private void rezervetIzveletoCelojumu() {
         int selectedRow = tableCelojumi.getSelectedRow();
