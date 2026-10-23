@@ -3,31 +3,25 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package dao;
+
 import db.DatabaseManager;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 /**
  *
  * @author Danils.Silovs
  */
 public class MaksajumsDAO {
-    public List<String> getVisiMaksajumi() {
-        List<String> saraksts = new ArrayList<>();
-        String sql = "SELECT * FROM MAKSAJUMS";
+    public static boolean createMaksajums(int rezervacijaId, double summa, String veids) {
+        String sql = "INSERT INTO MAKSAJUMS (rezervacija_id, summa, maksajuma_datums, maksajuma_veids) VALUES (?, ?, CURRENT_TIMESTAMP, ?)";
         try (Connection conn = DatabaseManager.getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
-            while (rs.next()) {
-                String info = "ID: " + rs.getInt("id") + 
-                              ", Rezervācija ID: " + rs.getInt("rezervacija_id") + 
-                              ", Summa: " + rs.getDouble("summa") + " EUR" +
-                              ", Statuss: " + rs.getString("statuss");
-                saraksts.add(info);
-            }
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, rezervacijaId);
+            pstmt.setDouble(2, summa);
+            pstmt.setString(3, veids);
+            return pstmt.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
-        return saraksts;
     }
 }

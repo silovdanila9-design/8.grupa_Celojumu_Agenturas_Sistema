@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package dao;
+
 import db.DatabaseManager;
 import model.Celojums;
 import java.sql.*;
@@ -13,7 +14,8 @@ import java.util.List;
  * @author Danils.Silovs
  */
 public class CelojumsDAO {
-    public List<Celojums> getAllCelojumi() {
+    
+    public static List<Celojums> getAllCelojumi() {
         List<Celojums> saraksts = new ArrayList<>();
         String sql = "SELECT * FROM CELOJUMS";
         try (Connection conn = DatabaseManager.getConnection();
@@ -21,10 +23,10 @@ public class CelojumsDAO {
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
                 saraksts.add(new Celojums(
-                    rs.getInt("id"),
-                    rs.getString("nosaukums"),
-                    rs.getString("apraksts"),
-                    rs.getDouble("cena")
+                    rs.getInt("ID"),
+                    rs.getString("NOSAUKUMS"),
+                    rs.getString("APRAKSTS"),
+                    rs.getDouble("CENA")
                 ));
             }
         } catch (SQLException e) {
@@ -32,20 +34,59 @@ public class CelojumsDAO {
         }
         return saraksts;
     }
-    
-    public boolean atjaunotCelojumu(Celojums c) {
-    String sql = "UPDATE CELOJUMS SET nosaukums = ?, apraksts = ?, cena = ? WHERE id = ?";
-    try (Connection conn = DatabaseManager.getConnection();
-         PreparedStatement pstmt = conn.prepareStatement(sql)) {
-        pstmt.setString(1, c.getNosaukums());
-        pstmt.setString(2, c.getApraksts());
-        pstmt.setDouble(3, c.getCena());
-        pstmt.setInt(4, c.getId());
-        pstmt.executeUpdate();
-        return true;
-    } catch (SQLException e) {
-        e.printStackTrace();
-        return false;
+
+    public static boolean deleteCelojums(int id) {
+        String sql = "DELETE FROM CELOJUMS WHERE ID = ?";
+        try (Connection conn = DatabaseManager.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, id);
+            return pstmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
+    
+    public static List<Celojums> searchCelojumi(String keyword) {
+        List<Celojums> saraksts = new ArrayList<>();
+        String sql = "SELECT * FROM CELOJUMS WHERE LOWER(NOSAUKUMS) LIKE ? OR LOWER(APRAKSTS) LIKE ?";
+        try (Connection conn = DatabaseManager.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            String searchPattern = "%" + keyword.toLowerCase() + "%";
+            pstmt.setString(1, searchPattern);
+            pstmt.setString(2, searchPattern);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                saraksts.add(new Celojums(
+                    rs.getInt("ID"),
+                    rs.getString("NOSAUKUMS"),
+                    rs.getString("APRAKSTS"),
+                    rs.getDouble("CENA")
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return saraksts;
+    }
+
+    public static List<Celojums> getCelojumiSortedByPrice(boolean ascending) {
+        List<Celojums> saraksts = new ArrayList<>();
+        String sql = "SELECT * FROM CELOJUMS ORDER BY CENA " + (ascending ? "ASC" : "DESC");
+        try (Connection conn = DatabaseManager.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                saraksts.add(new Celojums(
+                    rs.getInt("ID"),
+                    rs.getString("NOSAUKUMS"),
+                    rs.getString("APRAKSTS"),
+                    rs.getDouble("CENA")
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return saraksts;
     }
 }

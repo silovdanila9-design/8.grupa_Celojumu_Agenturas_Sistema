@@ -3,8 +3,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package gui;
-import javax.swing.*;
-import gui.MainDashboard;
+
+import dao.CelojumsDAO;
+import dao.KlientsDAO;
+import model.Celojums;
+import model.Klients;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Danils.Silovs
@@ -19,6 +28,34 @@ public class Celojumu_Agenturas_Sistema extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }
 
+    private String aktivaLietotajvards = "";
+    
+    private void loadCelojumiData() {
+        String[] columnNames = {"ID", "Nosaukums", "Apraksts", "Cena (EUR)"};
+        DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+        
+        try {
+            List<Celojums> saraksts = CelojumsDAO.getAllCelojumi();
+            for (Celojums c : saraksts) {
+                Object[] row = {
+                    c.getId(),
+                    c.getNosaukums(),
+                    c.getApraksts(),
+                    c.getCena()
+                };
+                model.addRow(row);
+            }
+            jTable1.setModel(model);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, 
+                "Kļūda ielādējot datus no datubāzes: " + e.getMessage(), 
+                "Kļūda", 
+                JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -28,10 +65,138 @@ public class Celojumu_Agenturas_Sistema extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jDialog1 = new javax.swing.JDialog();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        Reservbtn = new javax.swing.JButton();
+        Deletebtn = new javax.swing.JButton();
+        Updatebtn = new javax.swing.JButton();
+        Logoutbtn = new javax.swing.JButton();
+        jLabelWelcome = new javax.swing.JLabel();
+        Searchbtn = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         Loginbtn = new javax.swing.JButton();
         Registrationbtn = new javax.swing.JButton();
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "ID", "Nosaukums", "Apraksts", "Cena (EUR)"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
+        Reservbtn.setText("Rezervēt izvēlēto ceļojumu");
+        Reservbtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ReservbtnActionPerformed(evt);
+            }
+        });
+
+        Deletebtn.setText("Dzēst coļojumu");
+        Deletebtn.setToolTipText("");
+        Deletebtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DeletebtnActionPerformed(evt);
+            }
+        });
+
+        Updatebtn.setText("Atsvaidzināt sarakstu");
+        Updatebtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                UpdatebtnActionPerformed(evt);
+            }
+        });
+
+        Logoutbtn.setText("Izrakstīties");
+        Logoutbtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LogoutbtnActionPerformed(evt);
+            }
+        });
+
+        Searchbtn.setText("Meklēt");
+        Searchbtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SearchbtnActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(58, 58, 58)
+                        .addComponent(Deletebtn))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(Reservbtn)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(Logoutbtn)
+                        .addGap(78, 78, 78))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(Updatebtn)
+                        .addGap(49, 49, 49))))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(194, 194, 194)
+                        .addComponent(jLabelWelcome)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Searchbtn)))
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addComponent(Searchbtn)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelWelcome)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Reservbtn)
+                    .addComponent(Updatebtn))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Logoutbtn)
+                    .addComponent(Deletebtn))
+                .addGap(15, 15, 15))
+        );
+
+        javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
+        jDialog1.getContentPane().setLayout(jDialog1Layout);
+        jDialog1Layout.setHorizontalGroup(
+            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialog1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jDialog1Layout.setVerticalGroup(
+            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialog1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -104,93 +269,166 @@ public class Celojumu_Agenturas_Sistema extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void LoginbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginbtnActionPerformed
-        String lietotajvards = JOptionPane.showInputDialog(this, "Ievadiet lietotājvārdu:");
+        javax.swing.JPanel panel = new javax.swing.JPanel(new java.awt.GridLayout(2, 2, 10, 10));
+        
+        javax.swing.JTextField usernameField = new javax.swing.JTextField();
+        javax.swing.JPasswordField passwordField = new javax.swing.JPasswordField();
 
-        if (lietotajvards != null && !lietotajvards.trim().isEmpty()) {
-            JPasswordField passwordField = new JPasswordField();
-            int option = JOptionPane.showConfirmDialog(
-                    this,
-                    passwordField,
-                    "Ievadiet paroli:",
-                    JOptionPane.OK_CANCEL_OPTION,
-                    JOptionPane.PLAIN_MESSAGE
-            );
+        panel.add(new javax.swing.JLabel("Lietotājvārds:"));
+        panel.add(usernameField);
+        panel.add(new javax.swing.JLabel("Parole:"));
+        panel.add(passwordField);
 
-            if (option == JOptionPane.OK_OPTION) {
-                String parole = new String(passwordField.getPassword());
+        int option = JOptionPane.showConfirmDialog(
+                this, 
+                panel, 
+                "Sistēmas pieteikšanās", 
+                JOptionPane.OK_CANCEL_OPTION, 
+                JOptionPane.PLAIN_MESSAGE
+        );
 
-                dao.KlientsDAO klientsDAO = new dao.KlientsDAO();
-                boolean irAutorizets = klientsDAO.login(lietotajvards, parole);
+        if (option == JOptionPane.OK_OPTION) {
+            String lietotajvards = usernameField.getText().trim();
+            String parole = new String(passwordField.getPassword());
 
-                if (irAutorizets) {
-                    JOptionPane.showMessageDialog(
-                            this,
-                            "Ieja ir veiksmīga!",
-                            "Paziņojums",
-                            JOptionPane.INFORMATION_MESSAGE
-                    );
+            if (lietotajvards.isEmpty() || parole.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Lūdzu, aizpildiet visus laukus!", "Kļūda", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
 
-                    this.dispose();
-                    new MainDashboard(lietotajvards).setVisible(true);
+            KlientsDAO klientsDAO = new KlientsDAO();
+            Klients klients = klientsDAO.login(lietotajvards, parole);
 
-                } else {
-                    JOptionPane.showMessageDialog(
-                            this,
-                            "Nepareizs lietotājvārds vai parole!",
-                            "Kļūda",
-                            JOptionPane.ERROR_MESSAGE
-                    );
-                }
+            if (klients != null) {
+                aktivaLietotajvards = lietotajvards;
+                JOptionPane.showMessageDialog(this, "Ieja ir veiksmīga!", "Paziņojums", JOptionPane.INFORMATION_MESSAGE);
+
+                // Sagatavo un atver ceļojumu logu normālā izmērā
+                jLabelWelcome.setText("Laipni lūdzam, " + aktivaLietotajvards + "! Izvēlieties ceļojumu rezervācijai:");
+                loadCelojumiData();
+                
+                this.setVisible(false);
+                jDialog1.setSize(850, 600); // Uzstādām normālu loga izmēru
+                jDialog1.setLocationRelativeTo(null); // Centrējam uz ekrāna
+                jDialog1.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "Nepareizs lietotājvārds vai parole!", "Kļūda", JOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_LoginbtnActionPerformed
 
     private void RegistrationbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrationbtnActionPerformed
-        String vards = JOptionPane.showInputDialog(this, "Ievadiet vārdu:");
-        if (vards == null || vards.trim().isEmpty()) return;
+        javax.swing.JPanel panel = new javax.swing.JPanel(new java.awt.GridLayout(5, 2, 10, 10));
+        
+        javax.swing.JTextField vardsField = new javax.swing.JTextField();
+        javax.swing.JTextField uzvardsField = new javax.swing.JTextField();
+        javax.swing.JTextField epastsField = new javax.swing.JTextField();
+        javax.swing.JTextField lietotajvardsField = new javax.swing.JTextField();
+        javax.swing.JPasswordField passwordField = new javax.swing.JPasswordField();
 
-        String uzvards = JOptionPane.showInputDialog(this, "Ievadiet uzvārdu:");
-        if (uzvards == null || uzvards.trim().isEmpty()) return;
+        panel.add(new javax.swing.JLabel("Vārds:"));
+        panel.add(vardsField);
+        panel.add(new javax.swing.JLabel("Uzvārds:"));
+        panel.add(uzvardsField);
+        panel.add(new javax.swing.JLabel("E-pasts:"));
+        panel.add(epastsField);
+        panel.add(new javax.swing.JLabel("Lietotājvārds:"));
+        panel.add(lietotajvardsField);
+        panel.add(new javax.swing.JLabel("Parole:"));
+        panel.add(passwordField);
 
-        String epasts = JOptionPane.showInputDialog(this, "Ievadiet e-pastu:");
-        if (epasts == null || epasts.trim().isEmpty()) return;
-
-        String lietotajvards = JOptionPane.showInputDialog(this, "Ievadiet lietotājvārdu:");
-        if (lietotajvards == null || lietotajvards.trim().isEmpty()) return;
-
-        JPasswordField passwordField = new JPasswordField();
+        // Parāda dialoglodziņu ar visiem ievades laukiem vienuviet
         int option = JOptionPane.showConfirmDialog(
-                this,
-                passwordField,
-                "Ievadiet paroli:",
-                JOptionPane.OK_CANCEL_OPTION,
+                this, 
+                panel, 
+                "Jauna lietotāja reģistrācija", 
+                JOptionPane.OK_CANCEL_OPTION, 
                 JOptionPane.PLAIN_MESSAGE
         );
 
         if (option == JOptionPane.OK_OPTION) {
+            String vards = vardsField.getText().trim();
+            String uzvards = uzvardsField.getText().trim();
+            String epasts = epastsField.getText().trim();
+            String lietotajvards = lietotajvardsField.getText().trim();
             String parole = new String(passwordField.getPassword());
 
-            model.Klients jaunsKlients = new model.Klients(0, vards, uzvards, epasts, lietotajvards, parole);
-            dao.KlientsDAO klientsDAO = new dao.KlientsDAO();
-            boolean veiksme = klientsDAO.pievienotKlientu(jaunsKlients);
+            // Datu validācija – pārbaudām, vai visi lauki ir aizpildīti
+            if (vards.isEmpty() || uzvards.isEmpty() || epasts.isEmpty() || lietotajvards.isEmpty() || parole.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Visiem laukiem jābūt aizpildītiem!", "Kļūda", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            // Saglabājam datus, izmantojot Klients modeli un KlientsDAO
+            Klients jaunsKlients = new Klients(0, vards, uzvards, epasts, lietotajvards, parole);
+            KlientsDAO klientsDAO = new KlientsDAO();
+            boolean veiksme = klientsDAO.register(jaunsKlients);
 
             if (veiksme) {
-                JOptionPane.showMessageDialog(
-                        this,
-                        "Reģistrēšanās veiksmīga! Lietotājs saglabāts.",
-                        "Informācija",
-                        JOptionPane.INFORMATION_MESSAGE
-                );
+                JOptionPane.showMessageDialog(this, "Reģistrēšanās veiksmīga! Tagad varat ielogoties.", "Informācija", JOptionPane.INFORMATION_MESSAGE);
             } else {
-                JOptionPane.showMessageDialog(
-                        this,
-                        "Neizdevās piereģistrēt lietotāju.",
-                        "Kļūda",
-                        JOptionPane.ERROR_MESSAGE
-                );
+                JOptionPane.showMessageDialog(this, "Neizdevās reģistrēt lietotāju. Iespējams, šāds lietotājvārds jau eksistē.", "Kļūda", JOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_RegistrationbtnActionPerformed
+
+    private void ReservbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReservbtnActionPerformed
+        int selectedRow = jTable1.getSelectedRow();
+        if (selectedRow != -1) {
+            int celojumsId = (int) jTable1.getValueAt(selectedRow, 0);
+            String nosaukums = (String) jTable1.getValueAt(selectedRow, 1);
+            
+            boolean success = dao.RezervacijaDAO.createRezervacija(celojumsId, aktivaLietotajvards);
+            if (success) {
+                JOptionPane.showMessageDialog(this, "Ceļojums '" + nosaukums + "' veiksmīgi rezervēts lietotājam " + aktivaLietotajvards + "!");
+            } else {
+                JOptionPane.showMessageDialog(this, "Neizdevās veikt rezervāciju.", "Kļūda", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Lūdzu, izvēlieties ceļojumu no saraksta!", "Brīdinājums", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_ReservbtnActionPerformed
+
+    private void DeletebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeletebtnActionPerformed
+        int selectedRow = jTable1.getSelectedRow();
+        if (selectedRow != -1) {
+            int celojumsId = (int) jTable1.getValueAt(selectedRow, 0);
+            int confirm = JOptionPane.showConfirmDialog(this, "Vai tiešām vēlaties dzēst šo ceļojumu?", "Apstiprinājums", JOptionPane.YES_NO_OPTION);
+            if (confirm == JOptionPane.YES_OPTION) {
+                boolean dzēsts = CelojumsDAO.deleteCelojums(celojumsId);
+                if (dzēsts) {
+                    JOptionPane.showMessageDialog(this, "Ceļojums veiksmīgi dzēsts!");
+                    loadCelojumiData();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Neizdevās dzēst ceļojumu.", "Kļūda", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Lūdzu, izvēlieties ceļojumu dzēšanai!", "Brīdinājums", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_DeletebtnActionPerformed
+
+    private void UpdatebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdatebtnActionPerformed
+        loadCelojumiData();
+        JOptionPane.showMessageDialog(this, "Saraksts atsvaidzināts!");
+    }//GEN-LAST:event_UpdatebtnActionPerformed
+
+    private void LogoutbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogoutbtnActionPerformed
+        jDialog1.dispose();
+        this.setVisible(true);
+    }//GEN-LAST:event_LogoutbtnActionPerformed
+
+    private void SearchbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchbtnActionPerformed
+        String keyword = JOptionPane.showInputDialog(this, "Ievadiet meklēto atslēgvārdu:");
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            List<Celojums> rezultati = CelojumsDAO.searchCelojumi(keyword.trim());
+            DefaultTableModel model = new DefaultTableModel(new String[]{"ID", "Nosaukums", "Apraksts", "Cena (EUR)"}, 0);
+            for (Celojums c : rezultati) {
+                model.addRow(new Object[]{c.getId(), c.getNosaukums(), c.getApraksts(), c.getCena()});
+            }
+            jTable1.setModel(model);
+        }
+    }//GEN-LAST:event_SearchbtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -208,18 +446,10 @@ public class Celojumu_Agenturas_Sistema extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Celojumu_Agenturas_Sistema.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Celojumu_Agenturas_Sistema.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Celojumu_Agenturas_Sistema.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (Exception ex) {
             java.util.logging.Logger.getLogger(Celojumu_Agenturas_Sistema.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
 
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Celojumu_Agenturas_Sistema().setVisible(true);
@@ -228,9 +458,19 @@ public class Celojumu_Agenturas_Sistema extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Deletebtn;
     private javax.swing.JButton Loginbtn;
+    private javax.swing.JButton Logoutbtn;
     private javax.swing.JButton Registrationbtn;
+    private javax.swing.JButton Reservbtn;
+    private javax.swing.JButton Searchbtn;
+    private javax.swing.JButton Updatebtn;
+    private javax.swing.JDialog jDialog1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabelWelcome;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }

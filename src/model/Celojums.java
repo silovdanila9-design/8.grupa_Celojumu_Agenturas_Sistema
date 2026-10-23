@@ -4,13 +4,15 @@
  */
 package model;
 
+import java.util.Date;
 /**
  *
  * @author Danils.Silovs
  */
 public class Celojums {
     private int id;
-    private String nosaukums, apraksts;
+    private String nosaukums;
+    private String apraksts;
     private double cena;
 
     public Celojums(int id, String nosaukums, String apraksts, double cena) {

@@ -10,15 +10,19 @@ package model;
  */
 public class Klients {
     private int id;
-    private String vards, uzvards, epasts, lietotajvards, parolesJaucenkods;
+    private String vards;
+    private String uzvards;
+    private String epasts;
+    private String lietotajvards;
+    private String parole;
 
-    public Klients(int id, String vards, String uzvards, String epasts, String lietotajvards, String parolesJaucenkods) {
+    public Klients(int id, String vards, String uzvards, String epasts, String lietotajvards, String parole) {
         this.id = id;
         this.vards = vards;
         this.uzvards = uzvards;
         this.epasts = epasts;
         this.lietotajvards = lietotajvards;
-        this.parolesJaucenkods = parolesJaucenkods;
+        this.parole = parole;
     }
 
     public int getId() { return id; }
@@ -26,5 +30,5 @@ public class Klients {
     public String getUzvards() { return uzvards; }
     public String getEpasts() { return epasts; }
     public String getLietotajvards() { return lietotajvards; }
-    public String getParolesJaucenkods() { return parolesJaucenkods; }
+    public String getParole() { return parole; }
 }

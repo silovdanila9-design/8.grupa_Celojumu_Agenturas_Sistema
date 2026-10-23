@@ -4,24 +4,29 @@
  */
 package model;
 
+import java.util.Date;
 /**
  *
  * @author Danils.Silovs
  */
 public class Maksajums {
-    private int id, rezervacijaId;
+    private int id;
+    private int rezervacijaId;
     private double summa;
-    private String statuss;
+    private Date maksajumaDatums;
+    private String maksajumaVeids;
 
-    public Maksajums(int id, int rezervacijaId, double summa, String statuss) {
+    public Maksajums(int id, int rezervacijaId, double summa, Date maksajumaDatums, String maksajumaVeids) {
         this.id = id;
         this.rezervacijaId = rezervacijaId;
         this.summa = summa;
-        this.statuss = statuss;
+        this.maksajumaDatums = maksajumaDatums;
+        this.maksajumaVeids = maksajumaVeids;
     }
 
     public int getId() { return id; }
     public int getRezervacijaId() { return rezervacijaId; }
     public double getSumma() { return summa; }
-    public String getStatuss() { return statuss; }
+    public Date getMaksajumaDatums() { return maksajumaDatums; }
+    public String getMaksajumaVeids() { return maksajumaVeids; }
 }

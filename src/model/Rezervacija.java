@@ -4,21 +4,32 @@
  */
 package model;
 
+import java.util.Date;
 /**
  *
  * @author Danils.Silovs
  */
 public class Rezervacija {
-    private int id, celojumsId;
-    private String lietotajvards;
+    private int id;
+    private int lietotajsId;
+    private int celojumsId;
+    private Date rezervacijasDatums;
+    private int personuSkaits;
+    private String statuss;
 
-    public Rezervacija(int id, int celojumsId, String lietotajvards) {
+    public Rezervacija(int id, int lietotajsId, int celojumsId, Date rezervacijasDatums, int personuSkaits, String statuss) {
         this.id = id;
+        this.lietotajsId = lietotajsId;
         this.celojumsId = celojumsId;
-        this.lietotajvards = lietotajvards;
+        this.rezervacijasDatums = rezervacijasDatums;
+        this.personuSkaits = personuSkaits;
+        this.statuss = statuss;
     }
 
     public int getId() { return id; }
+    public int getLietotajsId() { return lietotajsId; }
     public int getCelojumsId() { return celojumsId; }
-    public String getLietotajvards() { return lietotajvards; }
+    public Date getRezervacijasDatums() { return rezervacijasDatums; }
+    public int getPersonuSkaits() { return personuSkaits; }
+    public String getStatuss() { return statuss; }
 }

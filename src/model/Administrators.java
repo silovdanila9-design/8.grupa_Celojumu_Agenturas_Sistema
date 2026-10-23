@@ -8,19 +8,9 @@ package model;
  *
  * @author Danils.Silovs
  */
-public class Administrators {
-    private int id;
-    private String lietotajvards, parole, loma;
-
-    public Administrators(int id, String lietotajvards, String parole, String loma) {
-        this.id = id;
-        this.lietotajvards = lietotajvards;
-        this.parole = parole;
-        this.loma = loma;
+public class Administrators extends Klients {
+    
+    public Administrators(int id, String vards, String uzvards, String epasts, String lietotajvards, String parole) {
+        super(id, vards, uzvards, epasts, lietotajvards, parole);
     }
-
-    public int getId() { return id; }
-    public String getLietotajvards() { return lietotajvards; }
-    public String getParole() { return parole; }
-    public String getLoma() { return loma; }
 }

@@ -3,24 +3,22 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package dao;
+
 import db.DatabaseManager;
-import model.Rezervacija;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 /**
  *
  * @author Danils.Silovs
  */
 public class RezervacijaDAO {
-    public boolean pievienotRezervaciju(Rezervacija r) {
-        String sql = "INSERT INTO REZERVACIJA (celojums_id, lietotajvards) VALUES (?, ?)";
+    
+    public static boolean createRezervacija(int celojumsId, String lietotajvards) {
+        String sql = "INSERT INTO REZERVACIJA (CELOJUMS_ID, LIETOTAJVARDS) VALUES (?, ?)";
         try (Connection conn = DatabaseManager.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1, r.getCelojumsId());
-            pstmt.setString(2, r.getLietotajvards());
-            pstmt.executeUpdate();
-            return true;
+            pstmt.setInt(1, celojumsId);
+            pstmt.setString(2, lietotajvards);
+            return pstmt.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
