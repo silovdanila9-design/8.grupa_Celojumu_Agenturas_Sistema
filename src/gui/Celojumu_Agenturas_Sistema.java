@@ -25,9 +25,24 @@ public class Celojumu_Agenturas_Sistema extends javax.swing.JFrame {
      */
     public Celojumu_Agenturas_Sistema() {
         initComponents();
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         new dao.KlientsDAO().printAllUsers();
         setLocationRelativeTo(null);
     }
+    
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {
+    int result = javax.swing.JOptionPane.showConfirmDialog(
+        this,
+        "Vai tiešām vēlaties iziet?",
+        "Apstiprinājums",
+        javax.swing.JOptionPane.YES_NO_OPTION,
+        javax.swing.JOptionPane.QUESTION_MESSAGE
+    );
+    
+    if (result == javax.swing.JOptionPane.YES_OPTION) {
+        System.exit(0);
+    }
+}
 
     private String aktivaLietotajvards = "";
     
