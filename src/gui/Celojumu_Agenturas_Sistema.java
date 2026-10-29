@@ -25,6 +25,7 @@ public class Celojumu_Agenturas_Sistema extends javax.swing.JFrame {
      */
     public Celojumu_Agenturas_Sistema() {
         initComponents();
+        new dao.KlientsDAO().printAllUsers();
         setLocationRelativeTo(null);
     }
 
